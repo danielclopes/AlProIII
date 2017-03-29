@@ -13,19 +13,61 @@ public class Main {
 		for (int i = 0; i < MAX; i++) {
 			v[i] = rnd.nextInt(MAX);
 		}
+		z = 0;
 		bubbleSort(v);
-		System.out.println("Total de execuções BubbleSort 1: " + z);
+		System.out.println("Total de execucoes BubbleSort 1: " + z);
+		z = 0;
 		bubbleSort2(v);
-		System.out.println("Total de execuções BubbleSort 2: " + z);
+		System.out.println("Total de execucoes BubbleSort 2: " + z);
+		z = 0;
 		insertionSort(v);
-		System.out.println("Total de execuções InsertionSort: " + z);
+		System.out.println("Total de execucoes InsertionSort: " + z);
 		z = 0;
 		quickSort(v);
-		System.out.println("Total de execuções QuickSort: " + z);
+		System.out.println("Total de execucoes QuickSort: " + z);
+		z = 0;
+		mergeSort(v);
+		System.out.println("Total de execucoes MergeSort: " + z);
+	}
+
+	public static void mergeSort(int v[]) {
+		mergesort(v, 0, v.length - 1);
+	}
+
+	public static void mergesort(int[] v, int inicio, int fim) {
+		if (inicio < fim) {
+			int meio = (inicio + fim) / 2;
+			mergesort(v, inicio, meio);
+			mergesort(v, meio + 1, fim);
+			merge(v, inicio, meio, fim);
+		}
+	}
+
+	private static void merge(int[] v, int inicio, int meio, int fim) {
+		int nL = meio - inicio + 1;
+		int nR = fim - meio;
+		int[] L = new int[nL];
+		int[] R = new int[nR];
+		System.arraycopy(v, inicio, L, 0, nL);
+		System.arraycopy(v, meio + 1, R, 0, nR);
+		int iL = 0;
+		int iR = 0;
+		for (int k = inicio; k <= fim; k++) {
+			z++;
+			if (iR < nR) {
+				if (iL < nL) {
+					if (L[iL] < R[iR])
+						v[k] = L[iL++];
+					else
+						v[k] = R[iR++];
+				} else
+					v[k] = R[iR++];
+			} else
+				v[k] = L[iL++];
+		}
 	}
 
 	public static void insertionSort(int v[]) {
-		z = 0;
 		int i, j, chave;
 		for (j = 1; j < v.length; j++) {
 			chave = v[j];
@@ -40,7 +82,6 @@ public class Main {
 	}
 
 	public static void bubbleSort(int v[]) {
-		z = 0;
 		for (int i = 0; i < v.length; i++) {
 			for (int j = 0; j < v.length - 1; j++) {
 				z++;
@@ -51,7 +92,6 @@ public class Main {
 	}
 
 	public static void bubbleSort2(int v[]) {
-		z = 0;
 		boolean trocou = true;
 		while (trocou) {
 			trocou = false;
